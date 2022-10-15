@@ -1,0 +1,3 @@
+selenium
+html-testrunner
+python-decouple
