@@ -28,7 +28,6 @@ A description of each option that can be passed to this script
 ARGUMENTS -------------------------------------------------------------
 A description of each argument that can or must be passed to this script
 '''
-
 # -----------------------------------------------------------------------------
 # Imports
 # -----------------------------------------------------------------------------
@@ -38,11 +37,13 @@ import time
 import unittest
 
 # Third-party imports -----------------------------------------------
+import pytest
+import allure
 
 # Our own imports ---------------------------------------------------
 from pages.main_page import *
 from pages.login_page import LogInPage
-from utils.test_cases import test_cases
+from utils.test_cases import formal_test_cases
 from tests.base_test import BaseTest, BASE_URL
 
 # -----------------------------------------------------------------------------
@@ -62,18 +63,22 @@ from tests.base_test import BaseTest, BASE_URL
 # -----------------------------------------------------------------------------
 # CLASSES
 # -----------------------------------------------------------------------------
+@allure.testcase(BASE_URL + '/dashboard', 'Main page')
+@pytest.mark.usefixtures("db_class")
 class TestMainPage(BaseTest):
 
+    @allure.step("Main page is loaded")
     def test_page_load(self):
-        print("\n" + str(test_cases(0)))
+        print("\n" + str(formal_test_cases(0)))
         login_page = LogInPage(self.driver)
         login_page.login_with_valid_user("valid_user")
         main_page = MainPage(self.driver)
         time.sleep(5)
         self.assertTrue(main_page.check_page_loaded(BASE_URL + '/dashboard'))
 
+    @allure.step("Click Les notes de frais button in main page")
     def test_click_les_notes_de_frais_button(self):
-        print("\n" + str(test_cases(1)))
+        print("\n" + str(formal_test_cases(1)))
         login_page = LogInPage(self.driver)
         login_page.login_with_valid_user("valid_user")
         main_page = MainPage(self.driver)

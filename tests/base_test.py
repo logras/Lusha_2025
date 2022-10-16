@@ -28,7 +28,6 @@ A description of each option that can be passed to this script
 ARGUMENTS -------------------------------------------------------------
 A description of each argument that can or must be passed to this script
 '''
-
 # -----------------------------------------------------------------------------
 # Imports
 # -----------------------------------------------------------------------------
@@ -37,10 +36,11 @@ A description of each argument that can or must be passed to this script
 # import sys
 # import os
 import unittest
-# import xmlrunner
-import HtmlTestRunner
 
 # Third-party imports -----------------------------------------------
+import pytest
+# import xmlrunner
+import HtmlTestRunner
 from decouple import config
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -68,6 +68,7 @@ BASE_URL = config('KIWIHR_URL')
 # I am using python unittest for asserting cases.
 # In this module, there should be test cases.
 # If you want to run it, you should type: python <module-name.py>
+@pytest.mark.usefixtures("db_class")
 class BaseTest(unittest.TestCase):
 
     def setUp(self):

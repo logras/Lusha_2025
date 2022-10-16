@@ -1,5 +1,5 @@
 
-# [Page Objects Model in Selenium](https://selenium-python.readthedocs.io/page-objects.html) with [unittest](https://docs.python.org/3/library/unittest.html?highlight=unit#module-unittest)  
+# [Page Objects Model in Selenium](https://selenium-python.readthedocs.io/page-objects.html) with [unittest](https://docs.python.org/3/library/unittest.html?highlight=unit#module-unittest) + [pytest](https://docs.pytest.org/en/stable/contents.html) + [allure](https://qameta.io/allure-report/)  
 ***by [BelR](https://github.com/belr20) with*** [![Python 3.10](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/downloads/release/python-3106/)
 
 ![selenium_pom_with_python_cover](assets/pom_selenium_cover-640x348.jpeg)
@@ -44,14 +44,16 @@ class MainPage(BasePage):
 When you want to write tests, you should derive your test class from `BaseTest` which holds basic functionalities for your tests.  
 Then you can call pages and related methods in accordance with the steps in the test cases.
 ```python
+@allure.testcase(BASE_URL, 'LogIn page')
+@pytest.mark.usefixtures("db_class")
 class TestLogInPage(BaseTest):
 
+    @allure.step("LogIn with VALID user")
     def test_login_with_valid_user(self):
-        print("\n" + str(test_cases(4)))
+        print("\n" + str(formal_test_cases(4)))
         login_page = LogInPage(self.driver)
-        login_page = login_page.click_sign_in_button()
         result = login_page.login_with_valid_user("valid_user")
-        self.assertIn("https://qsi-conseil.kiwihr.com/dashboard", result.get_url())
+        self.assertIn(BASE_URL, result.get_url())
 ```
 
 ## KiwiHR use case
@@ -91,9 +93,20 @@ pip install -r requirements.txt
 
 ## Running Tests
 
-- [ ] If you want to run all tests
+- [ ] If you want to run all tests with unittest
 ```sh
 python -m unittest
+```
+
+- [ ] If you want to run all tests with pytest
+```sh
+python -m pytest
+```
+
+- [ ] If you want to run all tests with [allure](https://pypi.org/project/allure-pytest/) report available in `reports` folder
+```sh
+pytest --alluredir=reports
+allure serve reports
 ```
 
 - [ ] If you want to run all tests with HTML report available in `reports` folder
@@ -115,7 +128,10 @@ python -m unittest tests.test_login_page.TestLogInPage.test_login_with_valid_use
 
 * [unittest | python.org](https://docs.python.org/3/library/unittest.html?highlight=unit#module-unittest)
 * [HtmlTestRunner | GitHub](https://github.com/oldani/HtmlTestRunner)
+* [allure-pytest | pypi.org](https://pypi.org/project/allure-pytest/)
 * [Selenium Page Objects Model](https://selenium-python.readthedocs.io/page-objects.html)
 * [Cloning a repository | GitHub](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
 * [Python virtual env | python.org](https://docs.python.org/3/library/venv.html)
 * [KiwiHR inscription | kiwihr.com](https://kiwihr.com/fr/inscription)
+* [allure-framework/allure-python | GitHub](https://github.com/allure-framework/allure-python)
+* [How to use unittest-based tests with pytest | pytest.org](https://docs.pytest.org/en/stable/how-to/unittest.html#unittest-testcase)

@@ -38,10 +38,12 @@ import time
 import unittest
 
 # Third-party imports -----------------------------------------------
+import pytest
+import allure
 
 # Our own imports ---------------------------------------------------
 from tests.base_test import *
-from utils.test_cases import test_cases
+from utils.test_cases import formal_test_cases
 from pages.main_page import MainPage
 from pages.login_page import LogInPage
 from pages.notes_de_frais_pages import LesNotesDeFraisPage
@@ -63,10 +65,13 @@ from pages.notes_de_frais_pages import LesNotesDeFraisPage
 # -----------------------------------------------------------------------------
 # CLASSES
 # -----------------------------------------------------------------------------
+@allure.testcase(BASE_URL + '/expenses/new', 'Les notes de frais page')
+@pytest.mark.usefixtures("db_class")
 class TestLesNotesDeFraisPage(BaseTest):
 
+    @allure.step("Click Nouvelle note button in Les notes de frais page")
     def test_click_nouvelle_note_button(self):
-        print("\n" + str(test_cases(2)))
+        print("\n" + str(formal_test_cases(2)))
         login_page = LogInPage(self.driver)
         login_page.login_with_valid_user("valid_user")
         main_page = MainPage(self.driver)

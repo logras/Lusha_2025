@@ -28,7 +28,6 @@ A description of each option that can be passed to this script
 ARGUMENTS -------------------------------------------------------------
 A description of each argument that can or must be passed to this script
 '''
-
 # -----------------------------------------------------------------------------
 # Imports
 # -----------------------------------------------------------------------------
@@ -38,10 +37,12 @@ import time
 import unittest
 
 # Third-party imports -----------------------------------------------
+import pytest
+import allure
 
 # Our own imports ---------------------------------------------------
 from tests.base_test import *
-from utils.test_cases import test_cases
+from utils.test_cases import formal_test_cases
 from pages.login_page import LogInPage
 
 # -----------------------------------------------------------------------------
@@ -64,10 +65,13 @@ purchase_amount = 1000000
 # -----------------------------------------------------------------------------
 # CLASSES
 # -----------------------------------------------------------------------------
+@allure.testcase(BASE_URL + '/expenses', 'Nouvelle note de frais form')
+@pytest.mark.usefixtures("db_class")
 class TestNouvelleNoteDeFraisPage(BaseTest):
 
+    @allure.step("Remplir formulaire in Nouvelle note de frais page")
     def test_remplir_formulaire(self):
-        print("\n" + str(test_cases(3)))
+        print("\n" + str(formal_test_cases(3)))
         login_page = LogInPage(self.driver)
         main_page = login_page.login_with_valid_user("valid_user")
         les_notes_de_frais_page = main_page.click_les_notes_de_frais_button()

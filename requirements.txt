@@ -1,3 +1,7 @@
+pytest
 selenium
+allure-pytest
+pytest-selenium
 html-testrunner
 python-decouple
+allure-python-commons

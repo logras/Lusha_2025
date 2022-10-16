@@ -30,7 +30,6 @@ A description of each option that can be passed to this script
 ARGUMENTS -------------------------------------------------------------
 A description of each argument that can or must be passed to this script
 '''
-
 # -----------------------------------------------------------------------------
 # Imports
 # -----------------------------------------------------------------------------
@@ -38,6 +37,7 @@ A description of each argument that can or must be passed to this script
 # stdlib imports -------------------------------------------------------
 
 # Third-party imports -----------------------------------------------
+import pytest
 
 # Our own imports ---------------------------------------------------
 
@@ -64,7 +64,7 @@ A description of each argument that can or must be passed to this script
 # -----------------------------------------------------------------------------
 # FUNCTIONS
 # -----------------------------------------------------------------------------
-def test_cases(number):
+def formal_test_cases(number):
     return testCases[number]
 
 
