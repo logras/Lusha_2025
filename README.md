@@ -1,7 +1,12 @@
 
 # [Page Objects Model in Selenium](https://selenium-python.readthedocs.io/page-objects.html) with [unittest](https://docs.python.org/3/library/unittest.html?highlight=unit#module-unittest) + [pytest](https://docs.pytest.org/en/stable/contents.html) + [allure](https://qameta.io/allure-report/)  
 
-***by [BelR](https://github.com/belr20) with*** [![Python 3.10](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/downloads/release/python-3106/)
+***by [BelR](https://github.com/belr20) with***
+[![Python badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/belr20/ed2161fd4d8343928522cb6cbfa809ce/raw/selenium-pom-python-badge.json)](https://www.python.org/downloads/release/python-3106/)
+![Selenium badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/belr20/8b02604366dd2f09945ab392895d2b07/raw/selenium-pom-selenium-badge.json)
+![Pytest badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/belr20/d9ce1966b3b9a3efa15409b1314b5cc6/raw/selenium-pom-pytest-badge.json)
+![Allure badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/belr20/ca107f1f3280bf38a227b90018e44d9f/raw/selenium-pom-allure-badge.json)
+![Gitmoji badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/belr20/5b5005f852683fab26bd0ef5738ad9d6/raw/selenium-pom-gitmoji-badge.json)
 
 ![selenium_pom_with_python_cover](assets/images/pom_selenium_cover-640x348.jpeg)
 
@@ -102,13 +107,13 @@ pip install -r requirements.txt
 
 ## Running Tests
 
-* [ ] If you want to run all tests with unittest
+* [ ] If you want to run all tests with [unittest](https://docs.python.org/3/library/unittest.html?highlight=unit#module-unittest)
 
 ```sh
 python -m unittest
 ```
 
-* [ ] If you want to run all tests with pytest
+* [ ] If you want to run all tests with [pytest](https://pypi.org/project/pytest/)
 
 ```sh
 python -m pytest
@@ -189,13 +194,33 @@ python -m unittest tests.test_login_page.TestLogInPage.test_login_with_valid_use
 
 ## Resources
 
-* [Allure CLI install](https://docs.qameta.io/allure-report/#_installing_a_commandline)
-* [unittest | python.org](https://docs.python.org/3/library/unittest.html?highlight=unit#module-unittest)
-* [Allure-pytest | pypi.org](https://pypi.org/project/allure-pytest/)
-* [HtmlTestRunner | GitHub](https://github.com/oldani/HtmlTestRunner)
-* [Selenium Page Objects Model](https://selenium-python.readthedocs.io/page-objects.html)
 * [Cloning a repository | GitHub](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
-* [Python virtual env | python.org](https://docs.python.org/3/library/venv.html)
+* [Creation of virtual environments | docs.python.org](https://docs.python.org/3/library/venv.html)
+
+<br/>
+
 * [KiwiHR inscription | kiwihr.com](https://kiwihr.com/fr/inscription)
-* [Allure-framework/allure-python | GitHub](https://github.com/allure-framework/allure-python)
-* [How to use unittest-based tests with pytest | pytest.org](https://docs.pytest.org/en/stable/how-to/unittest.html#unittest-testcase)
+
+<br/>
+
+* [Python Decouple | PyPI](https://pypi.org/project/python-decouple/)
+
+<br/>
+
+* [pytest | PyPI](https://pypi.org/project/pytest/)
+* [HtmlTestRunner | PyPI](https://pypi.org/project/html-testRunner/)
+* [Unit testing framework | docs.python.org](https://docs.python.org/3/library/unittest.html?highlight=unit#module-unittest)
+* [How to use unittest-based tests with pytest | docs.pytest.org](https://docs.pytest.org/en/stable/how-to/unittest.html#unittest-testcase)
+
+<br/>
+
+* [Selenium | PyPI](https://pypi.org/project/selenium/)
+* [Selenium pytest plugin | PyPI](https://pypi.org/project/pytest-selenium/)
+* [Webdriver Manager for Python | PyPI](https://pypi.org/project/webdriver-manager/)
+* [Selenium with Python | Page Objects Model | selenium-python.readthedocs.io](https://selenium-python.readthedocs.io/page-objects.html)
+
+<br/>
+
+* [Allure Pytest Plugin | PyPI](https://pypi.org/project/allure-pytest/)
+* [Allure Python Integrations | GitHub](https://github.com/allure-framework/allure-python)
+* [Allure Framework | CLI install | docs.qameta.io](https://docs.qameta.io/allure-report/#_installing_a_commandline)
