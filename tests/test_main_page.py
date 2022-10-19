@@ -68,22 +68,24 @@ from tests.base_test import BaseTest, BASE_URL
 class TestMainPage(BaseTest):
 
     @allure.step("Main page is loaded")
+    @allure.severity(formal_test_cases(0)[0])
     def test_page_load(self):
         print("\n" + str(formal_test_cases(0)))
         login_page = LogInPage(self.driver)
         login_page.login_with_valid_user("valid_user")
         main_page = MainPage(self.driver)
         time.sleep(5)
-        self.assertTrue(main_page.check_page_loaded(BASE_URL + '/dashboard'))
+        self.assertTrue(main_page.check_page_loaded(BASE_URL + '/dashboard'), "No matching URL")
 
     @allure.step("Click Les notes de frais button in main page")
+    @allure.severity(formal_test_cases(1)[0])
     def test_click_les_notes_de_frais_button(self):
         print("\n" + str(formal_test_cases(1)))
         login_page = LogInPage(self.driver)
         login_page.login_with_valid_user("valid_user")
         main_page = MainPage(self.driver)
         result = main_page.click_les_notes_de_frais_button()
-        self.assertIn(BASE_URL + '/expenses', result.get_url())
+        self.assertIn(BASE_URL + '/expenses', result.get_url(), "No matching URL")
 
 # -----------------------------------------------------------------------------
 # FUNCTIONS

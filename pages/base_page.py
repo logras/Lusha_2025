@@ -28,15 +28,15 @@ A description of each option that can be passed to this script
 ARGUMENTS ---------------------------------------------------------------------
 A description of each argument that can or must be passed to this script
 '''
-
 # -----------------------------------------------------------------------------
 # Imports
 # -----------------------------------------------------------------------------
 
 # stdlib imports -------------------------------------------------------
-from decouple import config
 
 # Third-party imports -----------------------------------------------
+import decouple
+
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.action_chains import ActionChains
@@ -47,7 +47,7 @@ from selenium.webdriver.support import expected_conditions as EC
 # -----------------------------------------------------------------------------
 # GLOBALS
 # -----------------------------------------------------------------------------
-BASE_URL = config('KIWIHR_URL')
+BASE_URL = decouple.config('KIWIHR_URL')
 
 # -----------------------------------------------------------------------------
 # CONSTANTS

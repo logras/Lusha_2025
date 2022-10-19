@@ -2,7 +2,7 @@
 # @IDE         PyCharm
 # @Project     selenium
 # @Filename    test_cases.py
-# @Directory   structured_pom/utils
+# @Directory   utils
 # @Author      belr
 # @Date        13/10/2022
 """
@@ -75,27 +75,27 @@ testCases = [
     #     description
     # ]
     [
-        'Blocker',
+        'BLOCKER',
         'when user goes to main page, page should be loaded'
     ],
     [
-        'Blocker',
+        'BLOCKER',
         'In "Main" page, when user click "Les notes de frais" button, he should see the "Notes de frais" page'
     ],
     [
-        'Blocker',
+        'BLOCKER',
         'In "Les notes de frais" page, when user click "Nouvelle note" button, he should see "Nouvelle note" Page'
     ],
     [
-        'Blocker',
+        'BLOCKER',
         'In "Nouvelle note" page, user can fill in the form & click "Soumettre" button for validation'
     ],
     [
-        'Blocker',
+        'BLOCKER',
         'In "Login" Page, when user log in with a VALID user, he should see "Main" Page'
     ],
     [
-        'Blocker',
+        'BLOCKER',
         'In "Login" Page, when user log in with an INVALID user, he should see Error Message'
     ],
 ]

@@ -70,6 +70,7 @@ purchase_amount = 1000000
 class TestNouvelleNoteDeFraisPage(BaseTest):
 
     @allure.step("Remplir formulaire in Nouvelle note de frais page")
+    @allure.severity(formal_test_cases(3)[0])
     def test_remplir_formulaire(self):
         print("\n" + str(formal_test_cases(3)))
         login_page = LogInPage(self.driver)
@@ -78,7 +79,7 @@ class TestNouvelleNoteDeFraisPage(BaseTest):
         nouvelle_note_de_frais_page = les_notes_de_frais_page.click_nouvelle_note_button()
         result = nouvelle_note_de_frais_page.remplir_formulaire(purchase_supplier, purchase_date, purchase_amount)
         time.sleep(5)
-        self.assertIn(BASE_URL + '/expenses', result.get_url())
+        self.assertIn(BASE_URL + '/expenses', result.get_url(), "No matching URL")
 
 # -----------------------------------------------------------------------------
 # FUNCTIONS

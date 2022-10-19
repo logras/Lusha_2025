@@ -28,7 +28,6 @@ A description of each option that can be passed to this script
 ARGUMENTS -------------------------------------------------------------
 A description of each argument that can or must be passed to this script
 '''
-
 # -----------------------------------------------------------------------------
 # Imports
 # -----------------------------------------------------------------------------
@@ -70,6 +69,7 @@ from pages.notes_de_frais_pages import LesNotesDeFraisPage
 class TestLesNotesDeFraisPage(BaseTest):
 
     @allure.step("Click Nouvelle note button in Les notes de frais page")
+    @allure.severity(formal_test_cases(2)[0])
     def test_click_nouvelle_note_button(self):
         print("\n" + str(formal_test_cases(2)))
         login_page = LogInPage(self.driver)
@@ -79,7 +79,7 @@ class TestLesNotesDeFraisPage(BaseTest):
         result = LesNotesDeFraisPage(self.driver)
         result = result.click_nouvelle_note_button()
         time.sleep(5)
-        self.assertIn(BASE_URL + '/expenses/new', result.get_url())
+        self.assertIn(BASE_URL + '/expenses/new', result.get_url(), "No matching URL")
 
 # -----------------------------------------------------------------------------
 # FUNCTIONS

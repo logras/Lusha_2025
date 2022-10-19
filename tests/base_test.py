@@ -43,14 +43,26 @@ import pytest
 import HtmlTestRunner
 from decouple import config
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
+
+from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.firefox import GeckoDriverManager
+from webdriver_manager.microsoft import EdgeChromiumDriverManager
+
+from selenium.webdriver.chrome.service import Service as ChromeService
+from selenium.webdriver.firefox.service import Service as FirefoxService
+from selenium.webdriver.edge.service import Service as EdgeService
+
+from selenium.webdriver.chrome.options import Options as ChromeOptions
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
+from selenium.webdriver.edge.options import Options as EdgeOptions
 
 # Our own imports ---------------------------------------------------
 
 # -----------------------------------------------------------------------------
 # GLOBALS
 # -----------------------------------------------------------------------------
-BASE_URL = config('KIWIHR_URL')
+BASE_URL = config('KIWIHR_URL', default='https://qsi-conseil.kiwihr.com')
+BROWSER = config('BROWSER', default='chrome')
 
 # -----------------------------------------------------------------------------
 # CONSTANTS
@@ -71,17 +83,50 @@ BASE_URL = config('KIWIHR_URL')
 @pytest.mark.usefixtures("db_class")
 class BaseTest(unittest.TestCase):
 
-    def setUp(self):
-        options = Options()
-        # options.add_argument("--headless") # Runs Chrome in headless mode
-        options.add_argument('--no-sandbox')  # Bypass OS security model
-        options.add_argument('disable-infobars')
-        options.add_argument("--disable-extensions")
-        # options.add_argument("--start-fullscreen")
-        options.add_argument('--disable-gpu')
+    browser = BROWSER
 
-        self.driver = webdriver.Chrome(options=options)
-        # self.driver = webdriver.Firefox()
+    def setUp(self):
+        if self.browser == "edge":
+            edge_options = EdgeOptions()
+            edge_options.add_argument("--ignore-certificate-errors")
+            edge_options.add_argument("--ignore-ssl-errors")
+            edge_options.add_argument("--ignore-certificate-errors-spki-list")
+            # edge_options.add_argument("--headless")  # Runs in headless mode
+            edge_options.add_argument("--no-sandbox")  # Bypass OS security model
+            edge_options.add_argument("--disable-infobars")
+            edge_options.add_argument("--disable-extensions")
+            # chrome_options.add_argument("--start-fullscreen")
+            edge_options.add_argument("--disable-gpu")
+            self.driver = webdriver.Edge(
+                service=EdgeService(EdgeChromiumDriverManager().install()),
+                options=edge_options
+            )
+        elif self.browser == "firefox":
+            firefox_options = FirefoxOptions()
+            firefox_options.add_argument("--disable-extensions")
+            firefox_options.add_argument("--ignore-certificate-errors")
+            firefox_options.add_argument("--ignore-ssl-errors")
+            firefox_options.add_argument("--ignore-certificate-errors-spki-list")
+            firefox_options.add_argument("--foreground")
+            self.driver = webdriver.Firefox(
+                service=FirefoxService(GeckoDriverManager().install()),
+                options=firefox_options
+            )
+        else:
+            chrome_options = ChromeOptions()
+            chrome_options.add_argument("--ignore-certificate-errors")
+            chrome_options.add_argument("--ignore-ssl-errors")
+            chrome_options.add_argument("--ignore-certificate-errors-spki-list")
+            # chrome_options.add_argument("--headless")  # Runs in headless mode
+            chrome_options.add_argument('--no-sandbox')  # Bypass OS security model
+            chrome_options.add_argument('--disable-infobars')
+            chrome_options.add_argument("--disable-extensions")
+            # chrome_options.add_argument("--start-fullscreen")
+            chrome_options.add_argument('--disable-gpu')
+            self.driver = webdriver.Chrome(
+                service=ChromeService(ChromeDriverManager().install()),
+                options=chrome_options
+            )
 
         self.driver.implicitly_wait(10)
         self.driver.maximize_window()
@@ -103,4 +148,4 @@ if __name__ == "__main__":
     suite = unittest.defaultTestLoader.discover('.')
     # xmlrunner.XMLTestRunner().run(suite)
     # unittest.TextTestRunner(verbosity=2).run(suite)
-    HtmlTestRunner.HTMLTestRunner(combine_reports=True, output='reports').run(suite)
+    HtmlTestRunner.HTMLTestRunner(combine_reports=True, output='reports/html').run(suite)

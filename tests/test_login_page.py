@@ -69,18 +69,20 @@ from utils.test_cases import formal_test_cases
 class TestLogInPage(BaseTest):
 
     @allure.step("LogIn with VALID user")
+    @allure.severity(formal_test_cases(4)[0])
     def test_login_with_valid_user(self):
         print("\n" + str(formal_test_cases(4)))
         login_page = LogInPage(self.driver)
         result = login_page.login_with_valid_user("valid_user")
-        self.assertIn(BASE_URL, result.get_url())
+        self.assertIn(BASE_URL, result.get_url(), "No matching URL")
 
     @allure.step("LogIn with INVALID user")
+    @allure.severity(formal_test_cases(5)[0])
     def test_login_with_invalid_user(self):
         print("\n" + str(formal_test_cases(5)))
         login_page = LogInPage(self.driver)
         result = login_page.login_with_invalid_user("invalid_user")
-        self.assertIn("Ce compte n'existe pas", result)
+        self.assertIn("Ce compte n'existe pas", result, "No matching ERROR message")
 
 # -----------------------------------------------------------------------------
 # FUNCTIONS

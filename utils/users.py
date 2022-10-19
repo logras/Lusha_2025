@@ -24,13 +24,12 @@ A description of each option that can be passed to this script
 ARGUMENTS -------------------------------------------------------------
 A description of each argument that can or must be passed to this script
 '''
-
 # -----------------------------------------------------------------------------
 # Imports
 # -----------------------------------------------------------------------------
 
 # stdlib imports -------------------------------------------------------
-from decouple import config
+import decouple
 
 # Third-party imports -----------------------------------------------
 # from operator import itemgetter
@@ -40,8 +39,13 @@ from decouple import config
 # -----------------------------------------------------------------------------
 # GLOBALS
 # -----------------------------------------------------------------------------
-VALID_USER_LOGIN = config('KIWIHR_LOGIN')
-VALID_USER_PASSWORD = config('KIWIHR_PASSWORD')
+# VALID_USER_LOGIN = decouple.config('KIWIHR_LOGIN', default='sovucas.fepaqe@jollyfree.com')
+VALID_USER_LOGIN = decouple.config('KIWIHR_LOGIN', default='<your_default_kiwihr_username_here>')
+# VALID_USER_PASSWORD = decouple.config('KIWIHR_PASSWORD', default='M2I_n1@2022')
+VALID_USER_PASSWORD = decouple.config(
+    'KIWIHR_PASSWORD',
+    default='<your_default_kiwihr_password_here>'
+    )
 
 # -----------------------------------------------------------------------------
 # CONSTANTS
