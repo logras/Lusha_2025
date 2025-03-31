@@ -2,17 +2,14 @@ import allure
 import time
 import os
 import platform
-
-from selenium.webdriver.remote.remote_connection import LOGGER
-
 import utils.helpers
 from utils.helpers import *
-from utils.constants import Constant as CONST
-# Third-party imports -----------------------------------------------
 from selenium.webdriver.common.by import By
+from utils.constants import Constant as CONST
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.remote.remote_connection import LOGGER
 from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
 
@@ -29,55 +26,64 @@ class PositionPage(BasePage):
         self.logger = logging.getLogger(__name__)
         LOGGER = self.logger
 
-    @allure.step("apply to all the openings in the selected department")
-    def fill_up_position_form(self, candidate_details):
+    # @allure.step("apply to all the openings in the selected department")
+    def fill_up_position_form(self, candidate_details=None, card_number=None, card_url=None):
         ELEMENT = PositionPageLocators()
         """Apply to all the openings in the selected department"""
 
-        # verify page finished loading
-        self.check_page_loaded()
-        # get candidate details
-        # first_name = candidate_details['first_name']
-        # last_name = candidate_details['last_name']
-        # email = candidate_details['email']
-        # phone = candidate_details['phone']
+        # Dynamically update the Allure step name
+        with allure.step(f"Applying to job card {card_number} with URL end with: {card_url.split('/')[-1]}"):
 
-        ELEMENT = PositionPageLocators()
-        try:
-            LOGGER.info("Trying to fill up the position form")
-            WebDriverWait(self.driver, wait_time).until(
-                EC.frame_to_be_available_and_switch_to_it(ELEMENT.POSITION_FORM_IFRAME)
-            )
+            # verify page finished loading
+            self.check_page_loaded()
+            # get candidate details
+            # first_name = candidate_details['first_name']
+            # last_name = candidate_details['last_name']
+            # email = candidate_details['email']
+            # phone = candidate_details['phone']
 
-            fields = {
-                ELEMENT.POSITION_FORM_FIRST_NAME: CONST.TEST_FIRST_NAME,
-                ELEMENT.POSITION_FORM_LAST_NAME: CONST.TEST_LAST_NAME,
-                ELEMENT.POSITION_FORM_EMAIL: CONST.TEST_EMAIL,
-                ELEMENT.POSITION_FORM_PHONE: CONST.TEST_PHONE
-            }
+            ELEMENT = PositionPageLocators()
+            try:
+                LOGGER.info("Trying to fill up the position form")
+                WebDriverWait(self.driver, wait_time).until(
+                    EC.frame_to_be_available_and_switch_to_it(ELEMENT.POSITION_FORM_IFRAME)
+                )
 
-            for locator, value in fields.items():
-                field = wait_until_css_visible(self.driver, wait_time, locator)
-                field.send_keys(value)
-                LOGGER.info(f"Filled {locator}: {value}")
+                fields = {
+                    ELEMENT.POSITION_FORM_FIRST_NAME: CONST.TEST_FIRST_NAME,
+                    ELEMENT.POSITION_FORM_LAST_NAME: CONST.TEST_LAST_NAME,
+                    ELEMENT.POSITION_FORM_EMAIL: CONST.TEST_EMAIL,
+                    ELEMENT.POSITION_FORM_PHONE: CONST.TEST_PHONE
+                }
 
-            #TODO -  self.validate_cv_upload_in_the_ui()
-            #Taking screenshot of careers page before selection
-            screenshot = self.driver.get_screenshot_as_png()
-            allure.attach(
-                screenshot,
-                name="position_form filled up with candidate details",
-                attachment_type=allure.attachment_type.PNG)
-        except TimeoutException as e:
-            # handling the case when the position is no longer available
-            if wait_until_css_visible(self.driver, wait_time, ELEMENT.POSITION_FORM_SEARCH):
-                LOGGER.info("Position is no longer available")
-            else:
+                for locator, value in fields.items():
+                    field = wait_until_css_visible(self.driver, wait_time, locator)
+                    field.send_keys(value)
+                    LOGGER.info(f"Filled {locator}: {value}")
+
+                # Handle resume/CV file upload
+                cv_path = utils.helpers.get_cv_path(department="R&D", filename=CONST.CV_FILE_NAME)
+                cv_field = wait_until_css_visible(self.driver, wait_time, ELEMENT.POSITION_FORM_CV_INPUT)
+                cv_field.send_keys(cv_path)
+                LOGGER.info("Resume/CV uploaded successfully")
+                time.sleep(3)
+                #TODO -  self.validate_cv_upload_in_the_ui()
+                #Taking screenshot of careers page before selection
+                screenshot = self.driver.get_screenshot_as_png()
+                allure.attach(
+                    screenshot,
+                    name="position_form filled up with candidate details",
+                    attachment_type=allure.attachment_type.PNG)
+            except TimeoutException as e:
+                # handling the case when the position is no longer available
+                if wait_until_css_visible(self.driver, wait_time, ELEMENT.POSITION_FORM_SEARCH):
+                    LOGGER.info("Position is no longer available")
+                else:
+                    raise e
+
+            except Exception as e:
+                LOGGER.error(f"Error filling up position form {e}")
                 raise e
-
-        except Exception as e:
-            LOGGER.error(f"Error filling up position form {e}")
-            raise e
 
     def validate_cv_upload_in_the_ui(self):
         """Validate if CV upload was successful in the ui"""
