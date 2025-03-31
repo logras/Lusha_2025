@@ -61,7 +61,7 @@ from selenium.webdriver.edge.options import Options as EdgeOptions
 # -----------------------------------------------------------------------------
 # GLOBALS
 # -----------------------------------------------------------------------------
-BASE_URL = config('KIWIHR_URL', default='https://qsi-conseil.kiwihr.com')
+BASE_URL = config('CONNECTEAM_URL', default='https://connecteam.com/')
 BROWSER = config('BROWSER', default='chrome')
 
 # -----------------------------------------------------------------------------
@@ -135,17 +135,7 @@ class BaseTest(unittest.TestCase):
     def tearDown(self):
         self.driver.quit()
 
-# -----------------------------------------------------------------------------
-# FUNCTIONS
-# -----------------------------------------------------------------------------
 
-
-# -----------------------------------------------------------------------------
-# RUNTIME PROCEDURE
-# -----------------------------------------------------------------------------
 if __name__ == "__main__":
-    # suite = unittest.TestLoader().loadTestsFromTestCase(BaseTest)
     suite = unittest.defaultTestLoader.discover('.')
-    # xmlrunner.XMLTestRunner().run(suite)
-    # unittest.TextTestRunner(verbosity=2).run(suite)
     HtmlTestRunner.HTMLTestRunner(combine_reports=True, output='reports/html').run(suite)

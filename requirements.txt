@@ -1,3 +1,4 @@
+retry
 pytest
 selenium
 allure-pytest

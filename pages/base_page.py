@@ -47,7 +47,7 @@ from selenium.webdriver.support import expected_conditions as EC
 # -----------------------------------------------------------------------------
 # GLOBALS
 # -----------------------------------------------------------------------------
-BASE_URL = decouple.config('KIWIHR_URL')
+BASE_URL = decouple.config('CONNECTEAM_URL')
 
 # -----------------------------------------------------------------------------
 # CONSTANTS
