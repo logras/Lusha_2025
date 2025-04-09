@@ -9,33 +9,13 @@ Page Objects Model (POM) is a design pattern that you can apply to develop web a
 * Reducing the amount of duplicated code
 * If the user interface changes, the fix needs changes in only one place
 
-## Python concept
-
-Basically POM consists of that each page is inherited from a base class which includes basic functionalities for all pages.  
-If you have some new functionality that each page has, you can simple add it to the base class.
-
-`BasePage` class includes basic functionality and driver initialization
-
-```python
-# base_page.py
-class BasePage(object):
-    def __init__(self, driver, base_url='https://qsi-conseil.kiwihr.com'):
-        self.base_url = base_url
-        self.driver = driver
-        self.timeout = 30
-
-    def find_element(self, *locator):
-        return self.driver.find_element(*locator)
-```
-
 
 ## Environment
 
 * [ ] First clone this repository (you can get help [here](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository))
 
 ```sh
-git clone https://github.com/belr20/selenium-page-objects-model-with-unittest.git
-cd selenium-page-objects-model-with-unittest
+git clone https://github.com/logras/Lusha_2025.git
 ```
 
 * [ ] Then you should create & activate a virtual environment called [venv](https://docs.python.org/3/library/venv.html)
