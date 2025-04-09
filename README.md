@@ -1,12 +1,4 @@
-
-# [Page Objects Model in Selenium](https://selenium-python.readthedocs.io/page-objects.html) with [unittest](https://docs.python.org/3/library/unittest.html?highlight=unit#module-unittest) + [pytest](https://docs.pytest.org/en/stable/contents.html) + [allure](https://qameta.io/allure-report/)  
-
-***by [BelR](https://github.com/belr20) with***
-[![Python badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/belr20/ed2161fd4d8343928522cb6cbfa809ce/raw/selenium-pom-python-badge.json)](https://www.python.org/downloads/release/python-3106/)
-![Selenium badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/belr20/8b02604366dd2f09945ab392895d2b07/raw/selenium-pom-selenium-badge.json)
-![Pytest badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/belr20/d9ce1966b3b9a3efa15409b1314b5cc6/raw/selenium-pom-pytest-badge.json)
-![Allure badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/belr20/ca107f1f3280bf38a227b90018e44d9f/raw/selenium-pom-allure-badge.json)
-![Gitmoji badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/belr20/5b5005f852683fab26bd0ef5738ad9d6/raw/selenium-pom-gitmoji-badge.json)
+# [Page Objects Model in Selenium](https://selenium-python.readthedocs.io/page-objects.html) with [pytest](https://docs.pytest.org/en/stable/contents.html) + [allure](https://qameta.io/allure-report/)  
 
 ![selenium_pom_with_python_cover](assets/images/pom_selenium_cover-640x348.jpeg)
 
@@ -36,50 +28,6 @@ class BasePage(object):
         return self.driver.find_element(*locator)
 ```
 
-`MainPage` is derived from the `BasePage` class, it contains methods related to this page, which will be used to create test steps.
-
-```python
-# main_page.py
-class MainPage(BasePage):
-    def __init__(self, driver):
-        self.locator = MainPageLocators
-        super().__init__(driver)  # Python3 version
-
-    def check_page_loaded(self):
-        return True if self.find_element(*self.locator.LOGO) else False
-```
-
-When you want to write tests, you should derive your test class from `BaseTest` which holds basic functionalities for your tests.  
-Then you can call pages and related methods in accordance with the steps in the test cases.
-
-```python
-@allure.testcase(BASE_URL, 'LogIn page')
-@pytest.mark.usefixtures("db_class")
-class TestLogInPage(BaseTest):
-
-    @allure.step("LogIn with VALID user")
-    def test_login_with_valid_user(self):
-        print("\n" + str(formal_test_cases(4)))
-        login_page = LogInPage(self.driver)
-        result = login_page.login_with_valid_user("valid_user")
-        self.assertIn(BASE_URL, result.get_url())
-```
-
-## KiwiHR use case
-
-Proposed by [@Abdessalam-Mouttaki](https://github.com/Abdessalam-Mouttaki) from [QSI Conseil](https://qsiconseil.ma/) :pray:  
-This use case consists of creating an expense in KiwiHR application :
-
-![kiwihr_expenses_fr_screenshot](assets/images/kiwihr_expenses_fr_screenshot-467x492.jpg)
-
-You can get a free instance for 14 days [here](https://kiwihr.com/fr/inscription).  
-Then you have to copy/paste `.env.example` to `.env` & modify the corresponding variables with your :
-
-* KiwiHR instance URL
-* KiwiHR username/email
-* KiwiHR password
-
-`supplier`, `purchase_date` & `amount` of the expense that will be created are accessible in `tests\test_nouvelle_note_de_frais_page.py`
 
 ## Environment
 
@@ -101,19 +49,11 @@ source venv/bin/activate  # On Linux
 * [ ] Finally install dependencies
 
 ```sh
-python -m pip install --upgrade pip wheel setuptools
 pip install -r requirements.txt
 ```
 
 ## Running Tests
 
-* [ ] If you want to run all tests with [unittest](https://docs.python.org/3/library/unittest.html?highlight=unit#module-unittest)
-
-```sh
-python -m unittest
-```
-
-* [ ] If you want to run all tests with [pytest](https://pypi.org/project/pytest/)
 
 ```sh
 python -m pytest
@@ -192,14 +132,74 @@ python -m unittest tests.test_login_page.TestLogInPage.test_login_with_valid_use
     python -m pytest
     ```
 
+## Parallel Test Execution
+
+To speed up test execution, this project now supports running tests in parallel using pytest-xdist.
+
+### Running Tests in Parallel
+
+* [ ] To run tests in parallel with auto-detected number of workers:
+
+```sh
+python -m pytest -n auto
+```
+
+* [ ] To run tests in parallel with a specific number of workers:
+
+```sh
+python -m pytest -n 4
+```
+
+* [ ] To run tests in parallel with a specific distribution mode:
+
+```sh
+python -m pytest -n 4 --dist=loadscope
+```
+
+### Using Provided Scripts
+
+The project includes convenience scripts for different parallel testing scenarios:
+
+* [ ] Basic parallel test execution:
+
+```sh
+python3 scripts/run_parallel_tests.py [num_workers]
+```
+
+* [ ] Running apply CV tests in parallel:
+
+```sh
+python3 scripts/run_parallel_apply_cv.py [num_workers]
+```
+
+* [ ] Running parameterized tests in parallel:
+
+```sh
+python3 scripts/run_parallel_parameterized.py [num_workers]
+```
+
+### IDE Compatibility for Test Execution
+
+When using PyCharm or other IDEs to run individual tests, you may encounter conflicts with the parallel execution settings. We've provided a helper script that allows running specific tests with custom options:
+
+* [ ] Running a specific test with IDE compatibility:
+
+```sh
+python3 scripts/run_test_in_ide.py tests/test_apply_cv.py::TestHomePage::test_apply_cv_to_rnd
+```
+
+* [ ] Running with additional options:
+
+```sh
+python3 scripts/run_test_in_ide.py tests/test_apply_cv.py -m nondestructive
+```
+
+For more detailed information on parallel test execution, see [docs/parallel_testing.md](docs/parallel_testing.md).
+
 ## Resources
 
 * [Cloning a repository | GitHub](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
 * [Creation of virtual environments | docs.python.org](https://docs.python.org/3/library/venv.html)
-
-<br/>
-
-* [KiwiHR inscription | kiwihr.com](https://kiwihr.com/fr/inscription)
 
 <br/>
 
@@ -224,3 +224,8 @@ python -m unittest tests.test_login_page.TestLogInPage.test_login_with_valid_use
 * [Allure Pytest Plugin | PyPI](https://pypi.org/project/allure-pytest/)
 * [Allure Python Integrations | GitHub](https://github.com/allure-framework/allure-python)
 * [Allure Framework | CLI install | docs.qameta.io](https://docs.qameta.io/allure-report/#_installing_a_commandline)
+
+<br/>
+
+* [pytest-xdist | PyPI](https://pypi.org/project/pytest-xdist/)
+* [pytest-xdist Documentation](https://pytest-xdist.readthedocs.io/en/latest/)

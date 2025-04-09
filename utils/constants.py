@@ -2,8 +2,6 @@
 
 from pathlib import Path
 
-
-
 class Constant:
 
     CV_FILE_NAME = "example_cv.pdf"

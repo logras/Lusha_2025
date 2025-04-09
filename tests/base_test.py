@@ -1,40 +1,4 @@
-#!/user/bin/env python3
-# @IDE         PyCharm
-# @Project     selenium
-# @Filename    base_test.py
-# @Directory   tests
-# @Author      belr
-# @Date        13/10/2022
-"""
-unittest for asserting cases.
-In this module, there should be test cases.
-If you want to run it, you should type: python <module-name.py>
-"""
-# -----------------------------------------------------------------------------
-# Copyright (c) 2015, the IPython Development Team and José Fonseca.
-#
-# Distributed under the terms of the Creative Commons License.
-#
-# The full license is in the file LICENSE.txt, distributed with this software.
-#
-#
-# REFERENCES:
-# http://ipython.org/ipython-doc/rel-0.13.2/development/coding_guide.html
-# https://www.python.org/dev/peps/pep-0008/
-# -----------------------------------------------------------------------------
-'''
-OPTIONS ------------------------------------------------------------------
-A description of each option that can be passed to this script
-ARGUMENTS -------------------------------------------------------------
-A description of each argument that can or must be passed to this script
-'''
-# -----------------------------------------------------------------------------
-# Imports
-# -----------------------------------------------------------------------------
 
-# stdlib imports -------------------------------------------------------
-# import sys
-# import os
 import unittest
 
 # Third-party imports -----------------------------------------------
@@ -43,6 +7,7 @@ import pytest
 import HtmlTestRunner
 from decouple import config
 from selenium import webdriver
+from utils.constants import Constant as CONST
 
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
@@ -56,31 +21,11 @@ from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium.webdriver.edge.options import Options as EdgeOptions
 
-# Our own imports ---------------------------------------------------
 
-# -----------------------------------------------------------------------------
-# GLOBALS
-# -----------------------------------------------------------------------------
-BASE_URL = config('CONNECTEAM_URL', default='https://connecteam.com/')
+BASE_URL = config('CONNECTEAM_URL', default=CONST.HOME_PAGE)
 BROWSER = config('BROWSER', default='chrome')
 
-# -----------------------------------------------------------------------------
-# CONSTANTS
-# -----------------------------------------------------------------------------
 
-
-# -----------------------------------------------------------------------------
-# LOCAL UTILITIES
-# -----------------------------------------------------------------------------
-
-
-# -----------------------------------------------------------------------------
-# CLASSES
-# -----------------------------------------------------------------------------
-# I am using python unittest for asserting cases.
-# In this module, there should be test cases.
-# If you want to run it, you should type: python <module-name.py>
-@pytest.mark.usefixtures("db_class")
 class BaseTest(unittest.TestCase):
 
     browser = BROWSER

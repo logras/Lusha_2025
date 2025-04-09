@@ -1,5 +1,4 @@
 import os
-import platform
 import logging
 from selenium.common import TimeoutException
 from selenium.webdriver.common.by import By
